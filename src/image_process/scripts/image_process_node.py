@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import rospy
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
@@ -5,16 +7,16 @@ import cv2
 
 def callback(msg):
     bridge = CvBridge()
-    # ROS Image -> OpenCV Image
+    # ROS -> OpenCV 
     frame = bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
 
-    # --- 1) Grayscale ---
+    # 1) Grayscale
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-    # --- 2) Edge Detection (Canny) ---
+    # 2) Edge Detection (Canny) 
     edges = cv2.Canny(gray, 100, 200)
 
-    # --- 3) Text Eklemek ---
+    # 3) Text Eklemek 
     text_image = frame.copy()
     cv2.putText(text_image, "ROS + OpenCV", (50, 50),
                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
